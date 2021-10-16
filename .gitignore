@@ -52,5 +52,5 @@ Mkfile.old
 dkms.conf
 
 # personal
-/ignore
-/.vscode
+.vscode/
+ignore/

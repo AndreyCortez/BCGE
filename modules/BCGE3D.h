@@ -162,8 +162,8 @@ void RenderMesh(Mesh mesh, Camera camera)
         Vector2 v2__ = {(v2_.X + 1.0) * (float)ScreenWidth / 2, (v2_.Y + 1.0) * (float)ScreenHeight / 2};
         Vector2 v3__ = {(v3_.X + 1.0) * (float)ScreenWidth / 2, (v3_.Y + 1.0) * (float)ScreenHeight / 2};
 
-        DrawLine(" ", v1__, v2__, White, White);
-        DrawLine(" ", v1__, v3__, White, White);
-        DrawLine(" ", v2__, v3__, White, White);
+        DrawLine(' ', v1__, v2__, White, White, 1);
+        DrawLine(' ', v1__, v3__, White, White, 1);
+        DrawLine(' ', v2__, v3__, White, White, 1);
     }
 }

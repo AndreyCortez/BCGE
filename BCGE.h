@@ -115,8 +115,8 @@ int RandomIntInRange(int min, int max);
 void FillScreen(char fill_char, Color foreground, Color background);
 void WriteText(char *string, Vector2 pos, Color foreground, Color background);
 void DrawRect(char fill_char, Rect target_rect, Color foreground, Color background, int width);
-void DrawLine(char *fill_char, Vector2 ini_pos, Vector2 fin_pos, Color foreground, Color background);
-void DrawCircle(char *fill_char, Vector2 center, int radius, Color foreground, Color background);
+void DrawLine(char fill_char, Vector2 ini_pos, Vector2 fin_pos, Color foreground, Color background, int width);
+void DrawCircle(char fill_char, Vector2 center, int radius, Color foreground, Color background, int width);
 
 // Funcoes de overlap
 bool RectRectCollision(Rect rect1, Rect rect2);
@@ -415,7 +415,7 @@ void DrawRect(char fill_char, Rect target_rect, Color foreground, Color backgrou
     }
 }
 
-void DrawLine(char *fill_char, Vector2 ini_pos, Vector2 fin_pos, Color foreground, Color background)
+void DrawLine(char fill_char, Vector2 ini_pos, Vector2 fin_pos, Color foreground, Color background, int width)
 {
     int xi = (int)ini_pos.X;
     int xf = (int)fin_pos.X;
@@ -437,7 +437,7 @@ void DrawLine(char *fill_char, Vector2 ini_pos, Vector2 fin_pos, Color foregroun
     else
         incY = -1;
 
-    WriteText(fill_char, ini_pos, foreground, background);
+    WriteOnBuffer(fill_char, ini_pos, foreground, background);
     Vector2 line = (Vector2){xi, yi};
 
     if (dx == 0)
@@ -448,7 +448,7 @@ void DrawLine(char *fill_char, Vector2 ini_pos, Vector2 fin_pos, Color foregroun
             while (line.Y != yf)
             {
                 line.Y++;
-                WriteText(fill_char, line, foreground, background);
+                WriteOnBuffer(fill_char, line, foreground, background);
             }
         }
         else
@@ -457,7 +457,7 @@ void DrawLine(char *fill_char, Vector2 ini_pos, Vector2 fin_pos, Color foregroun
             {
 
                 line.Y--;
-                WriteText(fill_char, line, foreground, background);
+                WriteOnBuffer(fill_char, line, foreground, background);
             }
         }
     }
@@ -469,7 +469,7 @@ void DrawLine(char *fill_char, Vector2 ini_pos, Vector2 fin_pos, Color foregroun
             {
 
                 line.X++;
-                WriteText(fill_char, line, foreground, background);
+                WriteOnBuffer(fill_char, line, foreground, background);
             }
         }
         else
@@ -478,7 +478,7 @@ void DrawLine(char *fill_char, Vector2 ini_pos, Vector2 fin_pos, Color foregroun
             {
 
                 line.X--;
-                WriteText(fill_char, line, foreground, background);
+                WriteOnBuffer(fill_char, line, foreground, background);
             }
         }
     }
@@ -488,7 +488,7 @@ void DrawLine(char *fill_char, Vector2 ini_pos, Vector2 fin_pos, Color foregroun
         {
 
             control = dx / 2;
-            WriteText(fill_char, ini_pos, foreground, background);
+            WriteOnBuffer(fill_char, ini_pos, foreground, background);
             while (line.X != xf)
             {
                 line.X += incX;
@@ -498,13 +498,13 @@ void DrawLine(char *fill_char, Vector2 ini_pos, Vector2 fin_pos, Color foregroun
                     line.Y += incY;
                     control += dx;
                 }
-                WriteText(fill_char, line, foreground, background);
+                WriteOnBuffer(fill_char, line, foreground, background);
             }
         }
         else
         {
             control = dy / 2;
-            WriteText(fill_char, ini_pos, foreground, background);
+            WriteOnBuffer(fill_char, ini_pos, foreground, background);
             while (line.Y != yf)
             {
                 line.Y += incY;
@@ -514,13 +514,13 @@ void DrawLine(char *fill_char, Vector2 ini_pos, Vector2 fin_pos, Color foregroun
                     line.X += incX;
                     control += dy;
                 }
-                WriteText(fill_char, line, foreground, background);
+                WriteOnBuffer(fill_char, line, foreground, background);
             }
         }
     }
 }
 
-void DrawCircle(char *fill_char, Vector2 center, int radius, Color foreground, Color background)
+void DrawCircle(char fill_char, Vector2 center, int radius, Color foreground, Color background, int width)
 {
     float theta = 0;
     Vector2 point;
@@ -531,7 +531,7 @@ void DrawCircle(char *fill_char, Vector2 center, int radius, Color foreground, C
     {
         point = (Vector2){center.X + radius * cos(theta), center.Y + radius * sin(theta)};
         lastPoint = (Vector2){point.X, 2 * center.Y - point.Y};
-        DrawLine(fill_char, lastPoint, point, foreground, background);
+        DrawLine(fill_char, lastPoint, point, foreground, background , 1);
         theta += M_PI / step;
     }
 }
